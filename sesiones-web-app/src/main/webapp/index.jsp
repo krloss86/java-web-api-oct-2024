@@ -4,9 +4,17 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Clase2 - Java WebApi</title>
 </head>
 <body>
-	
+	<!-- me da el nombre de contexto (dinamico) -->
+	<form
+		method="get" 
+		action="<%=request.getContextPath()%>/api/producto">
+		<input type="hidden" name="id" value="1"/>		
+		<button>
+			Consultar
+		</button>
+	</form>
 </body>
 </html>

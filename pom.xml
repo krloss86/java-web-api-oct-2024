@@ -17,5 +17,7 @@
   <!--modulos propios-->
   <modules>
     <module>sesiones-web-app</module>
+    <module>app-service</module>
+    <module>app-repository</module>
   </modules>
 </project>
