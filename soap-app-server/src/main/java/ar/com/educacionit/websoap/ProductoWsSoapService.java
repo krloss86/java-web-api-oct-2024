@@ -10,4 +10,7 @@ public interface ProductoWsSoapService {
 	//cada metood aca es un enpoint que vamos a poder consumir 
 	@WebMethod
 	public WSProductoDTO getProdctoById(Long id); /*falta lanzar una exception*/ 
+	
+	//tph: practicar
+	//public List<WSProductoDTO> findAll(); /*falta lanzar una exception*/
 }
