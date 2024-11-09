@@ -63,4 +63,77 @@
 	</dependencies>
 	
 	<!-- spring -->
+		<!--debido a incompatibilidad con java8, habilitamos  -->
+	<build>
+		<plugins>
+			<!-- Plugin para crear un JAR único con todas las dependencias -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.2.4</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<!-- Asegura que el manifiesto incluya la clase principal -->
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>ar.com.educacionit.websoap.main.ProductoWSSoapMain</mainClass>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Compiler Plugin to set the Java version -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>17</source>
+					<target>17</target>
+					<release>17</release>
+					<compilerArgs>
+						<arg>--add-opens</arg>
+						<arg>java.base/jdk.internal.misc=ALL-UNNAMED</arg>
+					</compilerArgs>
+				</configuration>
+			</plugin>			
+			<!-- Plugin para crear el JAR con atributo Main-Class en el manifiesto -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>ar.com.educacionit.websoap.main.ProductoWSSoapMain</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<!-- Plugin to run the application with JVM options -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<mainClass>ar.com.educacionit.websoap.main.ProductoWSSoapMain</mainClass>
+					<arguments>
+						<argument>--add-opens</argument>
+						<argument>java.base/jdk.internal.misc=ALL-UNNAMED</argument>					
+			            <argument>--add-opens</argument>
+			            <argument>java.base/java.lang=ALL-UNNAMED</argument>
+			            <argument>--add-opens</argument>
+			            <argument>java.base/java.lang.reflect=ALL-UNNAMED</argument>
+			        </arguments>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
