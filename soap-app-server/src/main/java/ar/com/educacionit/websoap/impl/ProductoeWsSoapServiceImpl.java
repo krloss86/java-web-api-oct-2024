@@ -9,9 +9,9 @@ import jakarta.jws.WebService;
 @WebService(endpointInterface = "ar.com.educacionit.websoap.ProductoWsSoapService")
 public class ProductoeWsSoapServiceImpl implements ProductoWsSoapService{
 
-	@Override
-	public ProductoDTO getProdctoById(Long id) {		
+	public WSProductoDTO getProdctoById(Long id) {		
 		ProductoService service = new ProductoServiceImpl();
-		return service.getById(id);
+		ProductoDTO dto = service.getById(id);
+		return new WSProductoDTO(dto.getId(), dto.getTitulo(), dto.getPrecio());
 	}
 }
