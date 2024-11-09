@@ -6,14 +6,12 @@
   <packaging>pom</packaging>
   <name>proyecto padre</name>
   <description>proyecto padre</description>
- 
   <!--variables -->
   <properties>
     <!--version de java a usar -->
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
   </properties>
-  
   <!--modulos propios-->
   <modules>
     <module>sesiones-web-app</module>
@@ -21,5 +19,6 @@
     <module>app-repository</module>
     <module>soap-app-server</module>
     <module>soap-app-client</module>
+    <module>app-rest-server</module>
   </modules>
 </project>
