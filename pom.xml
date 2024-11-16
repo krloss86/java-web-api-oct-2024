@@ -20,5 +20,6 @@
     <module>soap-app-server</module>
     <module>soap-app-client</module>
     <module>app-rest-server</module>
+    <module>app-domain</module>
   </modules>
 </project>
