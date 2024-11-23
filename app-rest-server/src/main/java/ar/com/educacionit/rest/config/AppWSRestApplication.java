@@ -7,7 +7,7 @@ public class AppWSRestApplication extends ResourceConfig{
 
 	public AppWSRestApplication() {
 		//TODO- corregir cuando carga da clasNotFounddef
-		register(JacksonFeature.class);
+		// register(JacksonFeature.class);
 		System.out.println("Se ha creado la configuracion");
 	}
 }
