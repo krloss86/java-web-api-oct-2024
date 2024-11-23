@@ -4,8 +4,12 @@ public class ProductoDTO {
 
 	private Long id;
 	private String titulo;
+	private String codigo;
 	private Double precio;
 	
+	public ProductoDTO() {
+		
+	}
 	//mutable|inmutable?
 	public ProductoDTO(
 			Long id,
@@ -18,7 +22,7 @@ public class ProductoDTO {
 		this.precio = precio;
 	}
 	
-	private void setId(Long id) {
+	public void setId(Long id) {
 		//guards
 		if(id == null || id < 0) {
 			throw new IllegalArgumentException("Id no puede ser nulo ni < 0");//runtime
@@ -43,6 +47,12 @@ public class ProductoDTO {
 	@Override
 	public String toString() {
 		return "{id:" + id + ", titulo:" + titulo + ", precio:" + precio + "}";
+	}
+	public String getCodigo() {
+		return codigo;
+	}
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 	
 	//completar lo que falta
