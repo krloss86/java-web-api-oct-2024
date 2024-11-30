@@ -21,5 +21,6 @@
     <module>soap-app-client</module>
     <module>app-rest-server</module>
     <module>app-domain</module>
+    <module>app-jsf-webapp</module>
   </modules>
 </project>
