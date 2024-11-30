@@ -48,7 +48,9 @@ public class ProductoRepositoryMySqlImpl implements ProductoRepository {
 			session.beginTransaction();
 			Producto producto = session.get(Producto.class, id);
 			
-			return new ProductoDTO(producto.getId(),producto.getTitulo(),producto.getPrecio());
+			ProductoDTO dto = new ProductoDTO(producto.getId(),producto.getTitulo(),producto.getPrecio());
+			dto.setCodigo(producto.getCodigo());
+			return dto;
 		}catch(HibernateException e) {
 			// session.getTransaction().rollback();
 			throw new DBConnectionException(e.getMessage(),e.getCause());

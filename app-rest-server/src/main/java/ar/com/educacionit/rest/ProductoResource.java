@@ -87,7 +87,7 @@ public class ProductoResource {
 		//idempotencia para el post
 		ProductoDTO dto = productoService.getByCodigo(request.getCodigo());
 		if(dto != null) {
-			return Response.ok(request).build();
+			return Response.ok(dto).build();
 		}
 		
 		try{			
@@ -126,6 +126,7 @@ public class ProductoResource {
 		}
 		
 		try {
+			productoActualizar.setId(id);
 			productoService.actualizar(productoActualizar);		
 			return Response.ok()
 					.entity(productoActualizar)
