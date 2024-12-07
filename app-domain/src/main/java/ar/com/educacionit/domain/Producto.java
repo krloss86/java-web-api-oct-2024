@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 //1- indico que esta clas producto es una entidada
@@ -27,17 +29,22 @@ public class Producto {
 	@Column(name = "precio", nullable = false)
 	private Double precio;
 	
+	@ManyToOne
+	@JoinColumn(name = "id_tipo_producto", referencedColumnName = "id")
+	private TipoProducto tipoProducto;
+	
 	public Producto() {
 		// necesitamos si o si esto!
 	}
 
 	//para cuando venga un dato desde la DB
-	public Producto(Long id, String titulo, String codigo, Double precio) {
+	public Producto(Long id, String titulo, String codigo, Double precio,TipoProducto tipoProducto) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
 		this.codigo = codigo;
 		this.precio = precio;
+		this.tipoProducto = tipoProducto;
 	}
 
 	//para enviar a la DB
@@ -85,7 +92,14 @@ public class Producto {
 		return "Producto [id=" + id + ", titulo=" + titulo + ", codigo=" + codigo + ", precio=" + precio + "]";
 	}
 	
-	
+
+	public TipoProducto getTipoProducto() {
+		return tipoProducto;
+	}
+
+	public void setTipoProducto(TipoProducto tipoProducto) {
+		this.tipoProducto = tipoProducto;
+	}
 }
 
 

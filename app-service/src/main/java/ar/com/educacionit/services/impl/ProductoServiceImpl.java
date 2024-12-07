@@ -1,10 +1,14 @@
-package ar.com.educacionit.services;
+package ar.com.educacionit.services.impl;
 
 import java.util.List;
 
+import ar.com.educacionit.domain.TipoProducto;
+import ar.com.educacionit.exceptions.GenericException;
+import ar.com.educacionit.exceptions.ServiceException;
 import ar.com.educacionit.repository.dtos.ProductoDTO;
 import ar.com.educacionit.repository.repository.ProductoRepository;
 import ar.com.educacionit.repository.repository.impl.ProductoRepositoryMySqlImpl;
+import ar.com.educacionit.services.ProductoService;
 
 public class ProductoServiceImpl implements ProductoService{
 	//implemento los metodos de la interface
@@ -53,5 +57,14 @@ public class ProductoServiceImpl implements ProductoService{
 	@Override
 	public void actualizar(ProductoDTO productoActualizar) {
 		this.repository.update(productoActualizar);		
+	}
+	
+	@Override
+	public List<TipoProducto> findTipoProductos() throws ServiceException {
+		try {
+			return this.repository.findTipoProductos();
+		} catch (GenericException e) {
+			throw new ServiceException("No se ha podido obtener la lista de tipo de productos", e);
+		}
 	}
 }

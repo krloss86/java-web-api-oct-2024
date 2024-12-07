@@ -1,6 +1,8 @@
 package ar.com.educacionit.services;
 import java.util.List;
 
+import ar.com.educacionit.domain.TipoProducto;
+import ar.com.educacionit.exceptions.ServiceException;
 import ar.com.educacionit.repository.dtos.ProductoDTO;
 
 public interface ProductoService {
@@ -16,4 +18,7 @@ public interface ProductoService {
 	public void eliminar(Long id);
 
 	public void actualizar(ProductoDTO productoActualizar);
+	
+	public List<TipoProducto> findTipoProductos() throws ServiceException;
+
 }

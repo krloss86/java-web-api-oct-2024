@@ -10,7 +10,7 @@ import org.hibernate.query.NativeQuery.ReturnableResultNode;
 import ar.com.educacionit.repository.dtos.ProductoDTO;
 import ar.com.educacionit.rest.validator.ValidadorManger;
 import ar.com.educacionit.services.ProductoService;
-import ar.com.educacionit.services.ProductoServiceImpl;
+import ar.com.educacionit.services.impl.ProductoServiceImpl;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;

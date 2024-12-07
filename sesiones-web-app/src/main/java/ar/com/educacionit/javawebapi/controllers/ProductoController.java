@@ -3,7 +3,7 @@ import java.io.IOException;
 
 import ar.com.educacionit.repository.dtos.ProductoDTO;
 import ar.com.educacionit.services.ProductoService;
-import ar.com.educacionit.services.ProductoServiceImpl;
+import ar.com.educacionit.services.impl.ProductoServiceImpl;
 import jakarta.servlet.ServletException;
 //<=8 usar javax.servlet
 import jakarta.servlet.annotation.WebServlet;

@@ -1,5 +1,6 @@
 package ar.com.educacionit.repository.repository.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,6 +10,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
 import ar.com.educacionit.domain.Producto;
+import ar.com.educacionit.domain.TipoProducto;
+import ar.com.educacionit.exceptions.GenericException;
 import ar.com.educacionit.hibernate.HibernateUtils;
 import ar.com.educacionit.repository.dtos.ProductoDTO;
 import ar.com.educacionit.repository.exceptions.DBConnectionException;
@@ -31,6 +34,12 @@ public class ProductoRepositoryMySqlImpl implements ProductoRepository {
 		
 		//DTO > Dominio
 		Producto nuevoProducto = new Producto(dto.getTitulo(), dto.getCodigo(), dto.getPrecio());//ctrlshift+i
+		
+		TipoProducto tipo = new TipoProducto();
+		tipo.setId(dto.getTipoProducto().getId());
+		
+		nuevoProducto.setTipoProducto(tipo);
+		
 		session.persist(nuevoProducto);
 		session.getTransaction().commit();
 		session.close();
@@ -65,10 +74,12 @@ public class ProductoRepositoryMySqlImpl implements ProductoRepository {
 		Session session = this.factory.getCurrentSession();
 		session.getTransaction().begin();
 		Producto producto = session.get(Producto.class, dto.getId());
+		TipoProducto tp = session.get(TipoProducto.class, dto.getTipoProducto().getId());
 
 		//actualizamos
 		producto.setPrecio(dto.getPrecio());
 		producto.setTitulo(dto.getTitulo());
+		producto.setTipoProducto(tp);
 		//y mas campo
 		
 		session.persist(producto);//TODO: VER PORQUE NO ACTUALIZA
@@ -101,10 +112,13 @@ public class ProductoRepositoryMySqlImpl implements ProductoRepository {
 		Query<Producto> query = session.createQuery(hql, Producto.class); // TODO: ver que metodo usar
 		
 		List<Producto> productos = query.getResultList();
-		
+	
+		session.getTransaction().commit();			
+		session.close();
+
 		//aplica lambdas
 		return productos.stream()
-			.map(p -> new ProductoDTO(p.getId(), p.getTitulo(), p.getPrecio()))
+			.map(p -> new ProductoDTO(p.getId(), p.getTitulo(), p.getCodigo(), p.getPrecio(),p.getTipoProducto()))
 			.collect(Collectors.toList());		
 	}
 
@@ -123,10 +137,37 @@ public class ProductoRepositoryMySqlImpl implements ProductoRepository {
 		if(p != null) {
 			ProductoDTO dto = new ProductoDTO(p.getId(), p.getTitulo(), p.getPrecio());
 			dto.setCodigo(p.getCodigo());
+			dto.setTipoProducto(p.getTipoProducto());
 			return dto;
 		}
 		return null;
 	}
 
-	
+	@Override
+	public List<TipoProducto> findTipoProductos() throws GenericException {
+		Session session = this.factory.getCurrentSession();
+		
+		List<TipoProducto> tipoProductos = new ArrayList<>();
+		
+		try {
+			
+			session.getTransaction().begin();
+			
+			//HQL
+			String hql = "Select p from " + TipoProducto.class.getName() + " p" ;
+			
+			Query<TipoProducto> query = session.createQuery(hql,TipoProducto.class);
+				
+			tipoProductos = query.getResultList();
+			
+			session.getTransaction().commit();			
+		}catch (Exception e) {
+			session.getTransaction().rollback();
+			throw new GenericException(e.getMessage(), e);			
+		} finally {
+			session.close();
+		}
+		
+		return tipoProductos;
+	}
 }

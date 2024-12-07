@@ -29,7 +29,9 @@
 
 		<!--MAPEAR NUESTAS CLASES  -->
 		<mapping class="ar.com.educacionit.domain.Producto" />
-<!-- 		<mapping class="ar.com.educationit.domain.TipoProducto" /> -->
+		<mapping class="ar.com.educacionit.domain.User" />
+		<mapping class="ar.com.educacionit.domain.Role" />
+		<mapping class="ar.com.educacionit.domain.TipoProducto" />
 
 	</session-factory>
 
