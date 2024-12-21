@@ -1,89 +1,32 @@
 import { useEffect, useState } from 'react'
 
 import './App.css'// hoja de estilos css
-import Producto from './Producto';
-import Data from './Data';
 import ListadoProducto from './ListadoProducto';
-
-const NOMBRES = ['gianmarco','pablo','matias','silvia','luis','carlos'];
-const PRODUCTO = {
-  id: Math.random(),
-  titulo: 'UN PRODUCTO X',
-  codigo : 'codigox',
-  precio: 1500.5,
-  tipo: {
-    id: 1,
-    descripcion: 'TIPO 1'
-  }
-};
-
-/*const PRODUCTOS = [
-  {
-    id: Math.random(),
-    titulo: 'UN PRODUCTO X',
-    codigo : 'codigox',
-    precio: 1500.5,
-    tipo: {
-      id: 1,
-      descripcion: 'TIPO 1'
-    }
-  },
-  {
-    id: Math.random(),
-    titulo: 'UN PRODUCTO y',
-    codigo : 'codigox',
-    precio: 2500.5,
-    tipo: {
-      id: 2,
-      descripcion: 'TIPO 2'
-    }
-  }
-];
-*/
 
 function App() {
 
   /*estado */
-  const [contador,setContador] = useState(0) //hook
-  const [nombres,setNombres] = useState(NOMBRES);
-  const [producto,setProducto] = useState(PRODUCTO)
   const [productos,setProductos] = useState([])
+  const [username,setUsername] = useState('')
+  const [password,setpassword] = useState('')
   
-  const [json,setJson] = useState(undefined);
-
-  /*funcion dentro el componente */
-  const incrementar = () => {
-    if(contador < 10) {
-      setContador(contador + 1);
+  useEffect(()=> {
+    if(username && password && (username.length >= 4 && password.length >= 4) ) {
+      //post
+      fetch(`http://localhost:8080/app-rest-server/api/auth?username=${username}&password=${password}`,{
+        method:'post',
+      }).then(response => 
+        //get
+        fetch('http://localhost:8080/app-rest-server/api/producto',{
+          headers: {
+            'authorization': response.headers['Access-Token']
+          }
+        }) 
+          .then(response => response.json()) 
+          .then(data => setProductos(adapat(data)))    
+      );    
     }
-  }
-  
-  // decrementar hasta 0
-  const decrementar = () => {
-    if(contador > 0) {
-      setContador(contador - 1);
-    }
-  }
-  /*
-  useEffect(()=> {
-    console.log('useEffect sin deps');
-  });
-  */
-  useEffect(()=> {
-    console.log('useEffect array vacio, solo una vez');
-    // cargar datos de un api rest externo
-    fetch('https://reqres.in/api/unknown') //funcion nativa de javascrip para hacer peticiones asincronas
-      .then(response => response.json()) 
-      .then(data => setJson(data))    
-  },[]);
-
-  useEffect(()=> {
-    console.log('useEffect array vacio, solo una vez');
-    // cargar datos de un api rest externo
-    fetch('http://localhost:8080/app-rest-server/api/producto') //funcion nativa de javascrip para hacer peticiones asincronas
-      .then(response => response.json()) 
-      .then(data => setProductos(adapat(data)))    
-  },[]);
+  },[username,password]);
 
   const adapat = (response) => {
     const convertidos = response.map(r => { 
@@ -111,30 +54,21 @@ function App() {
   return (
     /*fragment */
     /*asociar un cli evento a un elemento*/
+
     <>
-      <button onClick={incrementar}>
-        +
-      </button>
-      { contador}
-      <button onClick={decrementar}>
-        -
-      </button>   
-      <hr/>
-      <ul>
-        {
-          nombres.map(n => <li key={n}>{n}</li>)
-        }
-      </ul>
-      <hr/>
-      <Producto 
-        producto={producto}
-      />
-      <hr/>
+    <div>
+      <label>Username:</label>
+      <input value={username} onChange={(e) => setUsername(e.target.value)}></input>
+    </div>
+    <div>
+      <label>Password:</label>
+      <input value={password} onChange={(e) => setpassword(e.target.value)}></input>
+    </div>
+
       {productos.length > 0 &&
         <ListadoProducto productos={productos}/>
       }
-      <hr/>
-      { json && <Data json={json}/>}
+     
     </>
   )
 }

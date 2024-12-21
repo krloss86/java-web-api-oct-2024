@@ -96,8 +96,20 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/at.favre.lib/bcrypt -->
+		<dependency>
+		    <groupId>at.favre.lib</groupId>
+		    <artifactId>bcrypt</artifactId>
+		    <version>0.10.2</version>
+		</dependency>
 
-
+		<dependency>
+		  <groupId>com.auth0</groupId>
+		  <artifactId>java-jwt</artifactId>
+		  <version>4.4.0</version>
+		</dependency>
+		
 	</dependencies>
 	<build>
 		<finalName>app-rest-server</finalName>

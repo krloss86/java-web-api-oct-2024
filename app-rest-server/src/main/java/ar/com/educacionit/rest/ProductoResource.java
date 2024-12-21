@@ -1,16 +1,13 @@
 package ar.com.educacionit.rest;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.hibernate.dialect.function.array.ArrayIncludesArgumentValidator;
-import org.hibernate.query.NativeQuery.ReturnableResultNode;
 
 import ar.com.educacionit.repository.dtos.ProductoDTO;
 import ar.com.educacionit.rest.validator.ValidadorManger;
 import ar.com.educacionit.services.ProductoService;
 import ar.com.educacionit.services.impl.ProductoServiceImpl;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -52,6 +49,7 @@ public class ProductoResource {
 		}
 	}
 	
+	@RolesAllowed("ADMIN")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findAll() {
