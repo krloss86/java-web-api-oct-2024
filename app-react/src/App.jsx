@@ -19,7 +19,7 @@ function App() {
         //get
         fetch('http://localhost:8080/app-rest-server/api/producto',{
           headers: {
-            'authorization': response.headers['Access-Token']
+            'authorization': response.headers.get('Access-Token')
           }
         }) 
           .then(response => response.json()) 
